@@ -9,7 +9,8 @@ pip install chromedriver_autoinstall
 ```
 
 ## Usage:
-Write `import chromedriver_autoinstall` in your file, in the directory of which chromedriver will be installed.
+- To download chromedriver in the current directory, run `install_chromedriver`.
+- To use the autoinstaller as part of a program, write `import chromedriver_autoinstall` in your file. See the [example below](https://github.com/RoastSea8/chromedriver-autoinstaller#quick-example) for this use case.
 
 ## Quick Example:
 ```py
@@ -32,4 +33,4 @@ if __name__ == "__main__":
     main()
 ```
 
-Linux support coming soon.
+#### Linux support coming soon.
