@@ -58,6 +58,11 @@ def download_and_unzip():
    z.extractall()
 
 
+def get_path():
+   path = os.path.abspath(os.getcwd())
+   return f"install path: {path}"
+
+
 def install():
    get_download_page()
    download_and_unzip()

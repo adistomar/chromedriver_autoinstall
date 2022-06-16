@@ -7,7 +7,7 @@ with open('README.md') as readme_file:
 
 
 setup(
-   name="chromedriver-installer",
+   name="chromedriver_installer",
    version="0.0.1",
    author="RoastSea8 (Aditya Tomar)",
    author_email="aditya26042005@gmail.com",
@@ -15,8 +15,8 @@ setup(
    license="MIT",
    keywords=['chromedriver', 'install', 'automation', 'autoinstall', 'autoinstaller', 'autoinstallscript', 'selenium'],
    url="https://github.com/RoastSea8/chromedriver-autoinstaller",
-   packages=["chromedriver-installer"],
-   install_requires=['requests', 'bs4', 'io', 'subprocess', 'sys', 'os', 'lxml'],
+   packages=["chromedriver_installer"],
+   install_requires=['requests', 'bs4', 'lxml'],
    long_description_content_type="text/markdown",
    long_description=long_description,
    python_requires=">=3.6",
