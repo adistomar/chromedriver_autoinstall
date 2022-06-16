@@ -1,4 +1,4 @@
-from chromedriver_installer import script
+from chromedriver_autoinstall import script
 import os
 
 def install():
