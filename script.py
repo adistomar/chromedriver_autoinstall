@@ -97,5 +97,6 @@ def download_and_unzip():
    z.extractall()
 
 
-get_download_page()
-download_and_unzip()
+def install():
+   get_download_page()
+   download_and_unzip()
