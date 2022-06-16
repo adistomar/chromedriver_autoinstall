@@ -3,4 +3,5 @@ import os
 
 def install():
    script.install()
-   print(script.get_path())
+   path = os.path.abspath(os.getcwd())
+   print(f"install path: {path}")
