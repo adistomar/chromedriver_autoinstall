@@ -8,13 +8,13 @@ with open('README.md') as readme_file:
 
 setup(
    name="chromedriver_autoinstall",
-   version="0.0.5",
+   version="0.0.6",
    author="RoastSea8 (Aditya Tomar)",
    author_email="aditya26042005@gmail.com",
    description="Script to automatically install the ChromeDriver release compatible with the client's Chrome version.",
    license="MIT",
    keywords=['chromedriver', 'install', 'automation', 'autoinstall', 'autoinstaller', 'autoinstallscript', 'selenium'],
-   url="https://github.com/RoastSea8/chromedriver-autoinstaller",
+   url="https://github.com/RoastSea8/chromedriver_autoinstall",
    packages=["chromedriver_autoinstall"],
    entry_points = {
         'console_scripts': ['install_chromedriver=chromedriver_autoinstall.command_line:install_chromedriver'],
