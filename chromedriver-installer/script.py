@@ -1,55 +1,16 @@
-try:
-   import requests
-except:
-   import pip
-   pip.main(['install', 'requests'])
-   import requests
-try:
-   from bs4 import BeautifulSoup
-except:
-   import pip
-   pip.main(['install', 'bs4'])
-   from bs4 import BeautifulSoup
-try:
-   import zipfile
-except:
-   import pip
-   pip.main(['install', 'zipfile'])
-   import zipfile
-try:
-   import io
-except:
-   import pip
-   pip.main(['install', 'io'])
-   import io
-try:
-   from subprocess import PIPE, run
-except:
-   import pip
-   pip.main(['install', 'io'])
-   from subprocess import PIPE, run
-try:
-   import sys
-except:
-   import pip
-   pip.main(['install', 'sys'])
-   import sys
-try:
-   import os
-except:
-   import pip
-   pip.main(['install', 'os'])
-   import os
-try:
-   import lxml
-except:
-   import pip
-   pip.main(['install', 'lxml'])
-   import lxml
-   os.execv(sys.executable, ['python'] + sys.argv)
+import requests
+from bs4 import BeautifulSoup
+import zipfile
+import io
+from subprocess import PIPE, run
+import sys
+import os
+import lxml
+
 
 url = "https://chromedriver.chromium.org/downloads"
 urls = []
+
 
 def out(command):
    result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True, shell=True)
