@@ -73,8 +73,13 @@ def download_and_unzip():
    url = requests.get(url, stream=True)
    z = zipfile.ZipFile(io.BytesIO(url.content))
    z.extractall()
-   path = os.path.abspath(os.getcwd())
-   print(f"install path: {path}/chromedriver-{platform}")
+   # MacOS only
+   if "mac" in platform:
+      path = f"./chromedriver-{platform}/chromedriver"
+      out(f"chmod +x {path}")
+      os.chmod(path, 0o755)
+   path = f"{os.path.abspath(os.getcwd())}/chromedriver-{platform}"
+   print(f"install path: {path}")
    
 
 def install():
