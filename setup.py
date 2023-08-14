@@ -8,7 +8,7 @@ with open('README.md') as readme_file:
 
 setup(
    name="chromedriver_autoinstall",
-   version="0.0.8",
+   version="0.0.9",
    author="RoastSea8 (Aditya Tomar)",
    author_email="aditya26042005@gmail.com",
    description="Script to automatically install the ChromeDriver release compatible with the client's Chrome version. Supports all versions of Chrome.",
