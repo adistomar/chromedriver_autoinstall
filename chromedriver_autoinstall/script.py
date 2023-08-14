@@ -6,10 +6,9 @@ from subprocess import PIPE, run
 import sys
 import os
 import lxml
-
-
-url = "https://chromedriver.chromium.org/downloads"
-urls = []
+import re
+import json
+from urllib.request import urlopen
 
 
 def out(command):
@@ -18,46 +17,65 @@ def out(command):
 
 
 def get_platform():
-   if sys.platform == 'darwin':
-      platform = "mac"
+   if sys.platform == "darwin":
+      if "arm64" in out("uname -m"):
+         return "mac-arm64"
+      return "mac-x64"
    elif sys.platform.startswith("win"):
-      platform = "win"
-   return platform
+      return "win32"
+   elif "linux" in sys.platform:
+      return "linux64"
 
 
 def get_version():
    platform = get_platform()
-   if platform == "mac":
+   if "mac" in platform:
       chrome_download_path = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version"
-      version = out(chrome_download_path)[14:17]
-   elif platform == "win":
+   elif "win" in platform:
       chrome_download_path = 'reg query "HKEY_CURRENT_USER\Software\Google\Chrome\BLBeacon" /v version'
-      version = out(chrome_download_path)[-16:-13]
-   return version
+   elif "linux" in platform:
+      chrome_download_path = "google-chrome --version"
+   version = re.Match.group(re.search(r"[\d.]+", out(chrome_download_path)))
+   if int(version[:version.index(".")]) >= 115:
+      return version
+   return int(version[:version.index(".")])
 
 
 def get_download_page():
-   global url
-   r = requests.get(url, allow_redirects=True)
-   soup = BeautifulSoup(r.text, 'html.parser')
-   for link in soup.find_all('a'):
-      urls.append(str(link.get('href')))
-   for url in urls:
-      if (f"https://chromedriver.storage.googleapis.com/index.html?path={get_version()}" in url):
-         break
-   urls.clear()
-
+   version = get_version()
+   if isinstance(version, int):
+      url, urls = "https://chromedriver.chromium.org/downloads", []
+      r = requests.get(url, allow_redirects=True)
+      soup = BeautifulSoup(r.text, 'html.parser')
+      for link in soup.find_all('a'):
+         urls.append(str(link.get('href')))
+      for u in urls:
+         if (f"https://chromedriver.storage.googleapis.com/index.html?path={version}" in u):
+            return u
+   elif isinstance(version, str):
+      url = "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json"
+      response = urlopen(url)
+      data = json.loads(response.read())
+      target_dict = {l["version"]: l for l in data["versions"]}[version]
+      target_dict = {l["platform"]:l for l in target_dict["downloads"]["chromedriver"]}
+      return target_dict[get_platform()]["url"]
+      
 
 def download_and_unzip():
-   global url
-   url = url.replace("index.html?path", "?delimiter=/&prefix")
-   soup = BeautifulSoup(requests.get(url).text, features="xml").find_all("Key")
-   keys = [f"https://chromedriver.storage.googleapis.com/{k.getText()}" for k in soup if get_platform() in k.getText()]
-   r = requests.get(keys[0])
-   z = zipfile.ZipFile(io.BytesIO(r.content))
+   platform = get_platform()
+   version = get_version()
+   url = get_download_page()
+   if isinstance(version, int):
+      url = url.replace("index.html?path", "?delimiter=/&prefix")
+      soup = BeautifulSoup(requests.get(url).text, features="xml").find_all("Key")
+      keys = [f"https://chromedriver.storage.googleapis.com/{k.getText()}" for k in soup if platform in k.getText()]
+      url = keys[0]
+   url = requests.get(url, stream=True)
+   z = zipfile.ZipFile(io.BytesIO(url.content))
    z.extractall()
-
+   path = os.path.abspath(os.getcwd())
+   print(f"install path: {path}/chromedriver-{platform}")
+   
 
 def install():
-   get_download_page()
    download_and_unzip()
