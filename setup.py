@@ -8,7 +8,7 @@ with open('README.md') as readme_file:
 
 setup(
    name="chromedriver_autoinstall",
-   version="0.0.9",
+   version="1.0",
    author="RoastSea8 (Aditya Tomar)",
    author_email="aditya26042005@gmail.com",
    description="Script to automatically install the ChromeDriver release compatible with the client's Chrome version. Supports all versions of Chrome.",
@@ -24,7 +24,7 @@ setup(
    long_description=long_description,
    python_requires=">=3.6",
    classifiers=[
-      "Development Status :: 4 - Beta",
+      "Development Status :: 5 - Production/Stable",
       "Topic :: Software Development :: Testing",
       "Topic :: System :: Installation/Setup",
       "Topic :: Software Development :: Libraries :: Python Modules",
