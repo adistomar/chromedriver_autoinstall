@@ -56,8 +56,8 @@ def get_download_page():
       url = "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json"
       response = urlopen(url)
       data = json.loads(response.read())
-      target_dict = {l["version"]: l for l in data["versions"]}[version]
-      target_dict = {l["platform"]:l for l in target_dict["downloads"]["chromedriver"]}
+      target_dict = {l["version"][0:3]: l for l in data["versions"]}[version[0:3]]
+      target_dict = {l["platform"]: l for l in target_dict["downloads"]["chromedriver"]}
       return target_dict[get_platform()]["url"]
       
 
